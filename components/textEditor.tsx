@@ -160,7 +160,7 @@ export default function TextEditor() {
     }
 
     return (
-        <div>
+        <div className='w-full max-w-5xl mx-auto shadow-2xl rounded-lg'>
             <div className="w-full border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
                 <div className="px-3 py-2 border-b dark:border-gray-600">
                     <div className="flex flex-wrap items-center">
@@ -483,6 +483,7 @@ export default function TextEditor() {
                             </ToggleGroupItem>
                         </ToggleGroup>
                     </div>
+
                 </div>
                 <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
                     <div ref={editorRef} id="wysiwyg-example" className="w-full px-0 text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"></div>
