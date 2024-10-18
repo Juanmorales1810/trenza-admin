@@ -104,7 +104,7 @@ export default function TextEditor() {
         editorInstanceRef.current?.chain().focus().toggleHighlight().run();
     }
     const toggleCode = () => {
-        editorInstanceRef.current?.chain().focus().toggleCode().run();
+        editorInstanceRef.current?.chain().focus().toggleCodeBlock().run();
     }
     const toggleLink = () => {
         const url = prompt('Enter image URL:', 'https://flowbite.com');;
@@ -225,27 +225,27 @@ export default function TextEditor() {
                                         <DropdownMenuContent>
                                             <DropdownMenuLabel>Text size</DropdownMenuLabel>
                                             <DropdownMenuSeparator />
-                                            <DropdownMenuItem onClick={() => setFontSize("16")}>
+                                            <DropdownMenuItem onClick={() => setFontSize("16px")}>
                                                 <p data-text-size="16px" className="flex justify-between items-center w-full text-base rounded px-3 py-2 hover:bg-gray-100 text-gray-900 dark:hover:bg-gray-600 dark:text-white">16px (Default)
                                                 </p>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem onClick={() => setFontSize("12")}>
+                                            <DropdownMenuItem onClick={() => setFontSize("12px")}>
                                                 <p data-text-size="12px" className="flex justify-between items-center w-full text-xs rounded px-3 py-2 hover:bg-gray-100 text-gray-900 dark:hover:bg-gray-600 dark:text-white">12px (Tiny)
                                                 </p>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem onClick={() => setFontSize("14")}>
+                                            <DropdownMenuItem onClick={() => setFontSize("14px")}>
                                                 <p data-text-size="14px" className="flex justify-between items-center w-full text-sm rounded px-3 py-2 hover:bg-gray-100 text-gray-900 dark:hover:bg-gray-600 dark:text-white">14px (Small)
                                                 </p>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem onClick={() => setFontSize("18")}>
+                                            <DropdownMenuItem onClick={() => setFontSize("18px")}>
                                                 <p data-text-size="18px" className="flex justify-between items-center w-full text-lg rounded px-3 py-2 hover:bg-gray-100 text-gray-900 dark:hover:bg-gray-600 dark:text-white">18px (Lead)
                                                 </p>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem onClick={() => setFontSize("24")}>
+                                            <DropdownMenuItem onClick={() => setFontSize("24px")}>
                                                 <p data-text-size="24px" className="flex justify-between items-center w-full text-2xl rounded px-3 py-2 hover:bg-gray-100 text-gray-900 dark:hover:bg-gray-600 dark:text-white">24px (Large)
                                                 </p>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem onClick={() => setFontSize("36")}>
+                                            <DropdownMenuItem onClick={() => setFontSize("36px")}>
                                                 <p data-text-size="36px" className="flex justify-between items-center w-full text-4xl rounded px-3 py-2 hover:bg-gray-100 text-gray-900 dark:hover:bg-gray-600 dark:text-white">36px (Huge)
                                                 </p>
                                             </DropdownMenuItem>
