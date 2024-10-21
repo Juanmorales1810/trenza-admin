@@ -170,8 +170,18 @@ export default function TextEditor() {
         editorInstanceRef.current?.chain().focus().setHorizontalRule().run();
     }
 
+    const saveContent = () => {
+        const saveContent =
+            JSON.stringify(editorInstanceRef.current?.getJSON(), null, 2)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+        console.log(saveContent);
+    }
+
+
     return (
-        <div className="w-full border border-zinc-200 rounded-lg bg-zinc-50 dark:bg-zinc-900 dark:border-zinc-800">
+        <div className="w-full border border-zinc-200 rounded-lg bg-zinc-50 dark:bg-zinc-900 dark:border-zinc-800 shadow-2xl dark:shadow-none">
             <div className="px-3 py-2 border-b dark:border-zinc-700">
                 <div className="flex flex-wrap items-center">
                     <div className="flex items-center space-x-1 rtl:space-x-reverse flex-wrap">
@@ -181,44 +191,40 @@ export default function TextEditor() {
                                     <TooltipTrigger asChild>
                                         <ToggleGroupItem onClick={toggleBold} value="bold" aria-label="Toggle bold">
                                             <Bold className="w-5 h-5" />
-                                            <span className="sr-only">Negrita</span>
                                         </ToggleGroupItem>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Negrita</p>
+                                        <span className="">Negrita</span>
                                     </TooltipContent>
                                 </Tooltip>
                                 <Tooltip>
                                     <TooltipTrigger asChild>
                                         <ToggleGroupItem onClick={toggleItalic} value="italic" aria-label="Toggle italic">
                                             <Italic className="w-5 h-5" />
-                                            <span className="sr-only">Cursiva</span>
                                         </ToggleGroupItem>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Cursiva</p>
+                                        <span className="">Cursiva</span>
                                     </TooltipContent>
                                 </Tooltip>
                                 <Tooltip >
                                     <TooltipTrigger asChild>
                                         <ToggleGroupItem onClick={toggleUnderline} value="underline" aria-label="Toggle underline">
                                             <UnderlineIcon className="w-5 h-5" />
-                                            <span className="sr-only">Subrayado</span>
                                         </ToggleGroupItem>
                                     </TooltipTrigger>
                                     <TooltipContent >
-                                        <p>Subrayado</p>
+                                        <span className="">Subrayado</span>
                                     </TooltipContent>
                                 </Tooltip>
                                 <Tooltip>
                                     <TooltipTrigger asChild>
                                         <ToggleGroupItem onClick={toggleStrike} value="strike" aria-label="Toggle Strike">
                                             <Strikethrough className="w-5 h-5" />
-                                            <span className="sr-only">Tachar</span>
                                         </ToggleGroupItem>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Tachar</p>
+                                        <span className="">Tachar</span>
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
@@ -229,46 +235,42 @@ export default function TextEditor() {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button variant="ghost" onClick={toggleHighlight} value="highlight" aria-label="Highlight">
+                                    <Button variant="ghost" value="highlight" aria-label="Highlight">
                                         <Highlighter className="w-5 h-5" />
-                                        <span className="sr-only">Destacar</span>
                                     </Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <p>Destacar</p>
+                                    <span className="">Destacar</span>
                                 </TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <Button variant="ghost" onClick={toggleCode} value="code" aria-label="Code">
-                                        <Code className="w-5 h-5" />
-                                        <span className="sr-only">Código</span>
+                                        <Code />
                                     </Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <p>Código</p>
+                                    <span className="">Código</span>
                                 </TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <Button variant="ghost" onClick={toggleLink} value="link" aria-label="Link">
-                                        <LinkIcon className="w-5 h-5" />
-                                        <span className="sr-only">Link</span>
+                                        <LinkIcon />
                                     </Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <p>Link</p>
+                                    <span className="">Link</span>
                                 </TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <Button variant="ghost" onClick={removeLink} value="remove-link" aria-label="Remove link">
                                         <UnlinkIcon className="w-5 h-5" />
-                                        <span className="sr-only">Quitar link</span>
                                     </Button>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <p>Quitar link</p>
+                                    <span className="">Quitar link</span>
                                 </TooltipContent>
                             </Tooltip>
 
@@ -280,12 +282,11 @@ export default function TextEditor() {
                                                 <Button variant="ghost" asChild>
                                                     <div>
                                                         <ALargeSmall />
-                                                        <span className="sr-only">Tamaño del texto</span>
                                                     </div>
                                                 </Button>
                                             </TooltipTrigger>
                                             <TooltipContent>
-                                                <p>Tamaño del texto</p>
+                                                <span className="">Tamaño del texto</span>
                                             </TooltipContent>
                                         </Tooltip>
                                     </DropdownMenuTrigger>
@@ -325,12 +326,11 @@ export default function TextEditor() {
                                                 <Button variant="ghost" asChild>
                                                     <div>
                                                         <Palette />
-                                                        <span className="sr-only">Color del texto</span>
                                                     </div>
                                                 </Button>
                                             </TooltipTrigger>
                                             <TooltipContent>
-                                                <p>Color del texto</p>
+                                                <span className="">Color del texto</span>
                                             </TooltipContent>
                                         </Tooltip>
                                     </DropdownMenuTrigger>
@@ -350,12 +350,11 @@ export default function TextEditor() {
                                                 <Button variant="ghost" asChild>
                                                     <div>
                                                         <Type />
-                                                        <span className="sr-only">Fuente</span>
                                                     </div>
                                                 </Button>
                                             </TooltipTrigger>
                                             <TooltipContent>
-                                                <p>Fuente</p>
+                                                <span className="">Fuente</span>
                                             </TooltipContent>
                                         </Tooltip>
                                     </DropdownMenuTrigger>
@@ -410,44 +409,40 @@ export default function TextEditor() {
                                     <TooltipTrigger asChild>
                                         <ToggleGroupItem onClick={() => setTextAlign("left")} value="aling-left" aria-label="Align left">
                                             <AlignLeft />
-                                            <span className="sr-only">Alinear a la izquierda</span>
                                         </ToggleGroupItem>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Alinear a la izquierda</p>
+                                        <span className="">Alinear a la izquierda</span>
                                     </TooltipContent>
                                 </Tooltip>
                                 <Tooltip>
                                     <TooltipTrigger asChild>
                                         <ToggleGroupItem onClick={() => setTextAlign("center")} value="aling-center" aria-label="Align center">
                                             <AlignCenter />
-                                            <span className="sr-only">Alinear al centro</span>
                                         </ToggleGroupItem>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Alinear al centro</p>
+                                        <span className="">Alinear al centro</span>
                                     </TooltipContent>
                                 </Tooltip>
                                 <Tooltip>
                                     <TooltipTrigger asChild>
                                         <ToggleGroupItem onClick={() => setTextAlign("right")} value="aling-right" aria-label="Align right">
                                             <AlignRight />
-                                            <span className="sr-only">Alinear a la derecha</span>
                                         </ToggleGroupItem>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Alinear a la derecha</p>
+                                        <span className="">Alinear a la derecha</span>
                                     </TooltipContent>
                                 </Tooltip>
                                 <Tooltip>
                                     <TooltipTrigger asChild>
                                         <ToggleGroupItem onClick={() => setTextAlign("justify")} value="aling-right" aria-label="Align right">
                                             <AlignJustify />
-                                            <span className="sr-only">Justificado</span>
                                         </ToggleGroupItem>
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Justificado</p>
+                                        <span className="">Justificado</span>
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
@@ -546,22 +541,20 @@ export default function TextEditor() {
                             <TooltipTrigger asChild>
                                 <Button variant="ghost" onClick={addImage} value="add-image" aria-label="Add image">
                                     <ImageIcon />
-                                    <span className="sr-only">Agregar imagen</span>
                                 </Button>
                             </TooltipTrigger>
                             <TooltipContent>
-                                <p>Agregar imagen</p>
+                                <span className="">Agregar imagen</span>
                             </TooltipContent>
                         </Tooltip>
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Button variant="ghost" onClick={addYouTube} value="add-video" aria-label="Add video">
                                     <VideoIcon />
-                                    <span className="sr-only">Agregar video</span>
                                 </Button>
                             </TooltipTrigger>
                             <TooltipContent>
-                                <p>Agregar video</p>
+                                <span className="">Agregar video</span>
                             </TooltipContent>
                         </Tooltip>
                         <ToggleGroup type="single">
@@ -569,44 +562,40 @@ export default function TextEditor() {
                                 <TooltipTrigger asChild>
                                     <ToggleGroupItem onClick={toggleList} value="toggle-list" aria-label="Toggle list">
                                         <List />
-                                        <span className="sr-only">Lista</span>
                                     </ToggleGroupItem>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <p>Lista</p>
+                                    <span className="">Lista</span>
                                 </TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <ToggleGroupItem onClick={toggleOrderedList} value="toggle-ordered-list" aria-label="Toggle ordered list">
                                         <ListOrdered />
-                                        <span className="sr-only">Lista ordenada</span>
                                     </ToggleGroupItem>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <p>Lista ordenada</p>
+                                    <span className="">Lista ordenada</span>
                                 </TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <ToggleGroupItem onClick={toggleBlockquote} value="toggle-blockquote" aria-label="Toggle blockquote">
                                         <Quote size={20} />
-                                        <span className="sr-only">Cita</span>
                                     </ToggleGroupItem>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <p>Cita</p>
+                                    <span className="">Cita</span>
                                 </TooltipContent>
                             </Tooltip>
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <ToggleGroupItem onClick={toggleHorizontalRule} value="horizontal-rule" aria-label="Horizontal rule">
                                         <SquareMinus />
-                                        <span className="sr-only">Separador horizontal</span>
                                     </ToggleGroupItem>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <p>Separador horizontal</p>
+                                    <span className="">Separador horizontal</span>
                                 </TooltipContent>
                             </Tooltip>
                         </ToggleGroup>
@@ -616,6 +605,7 @@ export default function TextEditor() {
             <div className="px-4 py-2 bg-white rounded-b-lg dark:bg-zinc-800">
                 <div ref={editorRef} id="wysiwyg-example" className="block w-full px-0 text-zinc-800 bg-white border-0 dark:bg-zinc-800 focus:ring-0 dark:text-white dark:placeholder-zinc-400 max-w-5xl"></div>
             </div>
+            <Button onClick={saveContent} className="w-full py-2 text-sm font-semibold text-white bg-blue-500 dark:bg-blue-600 rounded-b-lg">Guardar contenido</Button>
         </div>
     )
 }
