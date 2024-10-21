@@ -32,7 +32,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Button } from '@/components/ui/button';
-import { ALargeSmall, AlignCenter, AlignJustify, AlignLeft, AlignRight, Bold, ChevronDown, Code, Highlighter, ImageIcon, Italic, LinkIcon, List, ListOrdered, Palette, Quote, SquareMinus, Strikethrough, Type, UnderlineIcon, Unlink, UnlinkIcon, VideoIcon } from 'lucide-react';
+import { ALargeSmall, AlignCenter, AlignJustify, AlignLeft, AlignRight, Bold, ChevronDown, Code, Highlighter, ImageIcon, Italic, LinkIcon, List, ListOrdered, Palette, Quote, SquareMinus, Strikethrough, Type, UnderlineIcon, UnlinkIcon, VideoIcon } from 'lucide-react';
 
 
 export default function TextEditor() {
