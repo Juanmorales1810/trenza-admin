@@ -1,19 +1,19 @@
 "use client";
 
-import { ALargeSmall, AlignCenter, AlignJustify, AlignLeft, AlignRight, Bold, ChevronDown, Code, Highlighter, ImageIcon, Italic, LinkIcon, List, ListOrdered, Palette, Quote, SquareMinus, Strikethrough, Type, UnderlineIcon, UnlinkIcon, VideoIcon } from 'lucide-react';
+import { ALargeSmall, AlignCenter, AlignJustify, AlignLeft, AlignRight, Bold, ChevronDown, Code, Highlighter, ImageIcon, Italic, LinkIcon, List, ListOrdered, Loader2, Palette, Quote, SquareMinus, Strikethrough, Type, UnderlineIcon, UnlinkIcon, VideoIcon } from 'lucide-react';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
 import FontFamily from '@tiptap/extension-font-family';
 import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import Highlight from '@tiptap/extension-highlight';
+import { useEffect, useRef, useState } from 'react';
 import YouTube from '@tiptap/extension-youtube';
 import { Color } from '@tiptap/extension-color';
 import { Button } from '@/components/ui/button';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Textarea } from './ui/textarea';
 import { Editor } from '@tiptap/core';
 import { Input } from './ui/input';
@@ -38,15 +38,12 @@ import {
 } from "@/components/ui/tooltip"
 import { useFetch } from '@/hooks/useFetch';
 import { useLoading } from "@/hooks/useLoading";
-import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
+import { blogValidationschema } from '@/validations/blogValidation';
 
-const schema = z.object({
-    name: z.string().min(1, { message: 'Required' }),
-    age: z.number().min(10),
-});
+
+
 
 
 export default function TextEditor() {
@@ -186,14 +183,6 @@ export default function TextEditor() {
         editorInstanceRef.current?.chain().focus().setHorizontalRule().run();
     }
 
-    const saveContent = () => {
-        const saveContent =
-            JSON.stringify(editorInstanceRef.current?.getJSON(), null, 2)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;");
-        console.log(saveContent);
-    }
     //useLoading
     const { finishLoading, isLoading, startLoading } = useLoading()
     //useAuthFetch
@@ -218,16 +207,18 @@ export default function TextEditor() {
         formState: { errors },
         watch
     } = useForm({
-        resolver: zodResolver(schema),
+        resolver: zodResolver(blogValidationschema),
     });
 
 
     //Enviar datos
-    const onSubmit = handleSubmit(async ({ Titulo: titulo, Description: color }) => {
+    const onSubmit = handleSubmit(async ({ Titulo: titulo, Description: description }) => {
+        console.log("hola");
+
         startLoading()
         const formData = new FormData();
         formData.append("titulo", titulo);
-        formData.append("color", color);
+        formData.append("description", description);
 
         const imageFile = watch('Image') as FileList;
         if (imageFile && imageFile[0]) {
@@ -238,11 +229,18 @@ export default function TextEditor() {
         if (coverFile && coverFile[0]) {
             formData.append("cover", coverFile[0]);
         }
+        const saveContent =
+            JSON.stringify(editorInstanceRef.current?.getJSON(), null, 2)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+
+        formData.append("content", saveContent);
 
 
         await authFetch({
-            endpoint: 'catalogo',
-            redirectRoute: '/admin/settings',
+            endpoint: 'blog',
+            // redirectRoute: '/admin/settings',
             formData: formData,
             options: {
                 headers: {
@@ -254,38 +252,49 @@ export default function TextEditor() {
 
     });
 
+
     return (
         <div className='w-full max-w-5xl'>
             <div className='flex flex-row justify-center items-start gap-10 my-16'>
-                <form className='flex-1'>
+                <form id='form-card' onSubmit={onSubmit} className='flex-1' action="/submit" >
                     <p className='text-xl my-2 text-center'>Datos de la card</p>
+                    <Label>Titulo</Label>
                     <Input
                         type='text'
                         placeholder="Título de la publicación"
-                        className="w-full mb-4"
+                        className="w-full mb-4 invalid:border-red-500"
+                        aria-invalid={errors.Titulo ? "true" : "false"}
                         {...register('Titulo')}
                     />
+                    {errors.Titulo?.message && <p className='text-red-500 text-xs relative -top-3 left-3'>{String(errors.Titulo.message)}</p>}
+                    <Label>Descripción</Label>
                     <Textarea
                         placeholder='Descripción de la publicación'
                         className="w-full mb-4"
+                        aria-invalid={errors.Description ? "true" : "false"}
                         {...register('Description')}
                     />
+                    {errors.Description?.message && <p className='text-red-500 text-xs relative -top-3 left-3'>{String(errors.Description.message)}</p>}
                     <Label>Imagen de la card (formato 1:1)</Label>
                     <Input
                         type="file"
                         placeholder="URL de la imagen"
                         className="w-full mb-4"
+                        aria-invalid={errors.Image ? "true" : "false"}
                         {...register('Image')}
                         onChange={(e) => handleImageChange(e, 'image')}
                     />
-                    <Label>Imagen de portada del blog (formato 16/7)</Label>
+                    {errors.Image?.message && <p className='text-red-500 text-xs relative -top-3 left-3'>{String(errors.Image.message)}</p>}
+                    <Label>Imagen de portada del blog (formato 16:7)</Label>
                     <Input
                         type="file"
                         placeholder="URL de la imagen"
                         className="w-full mb-4"
+                        aria-invalid={errors.Cover ? "true" : "false"}
                         {...register('Cover')}
                         onChange={(e) => handleImageChange(e, 'cover')}
                     />
+                    {errors.Cover?.message && <p className='text-red-500 text-xs relative -top-3 left-3'>{String(errors.Cover.message)}</p>}
                 </form>
                 <div className='max-w-[550px]'>
                     <p className='text-xl my-2 text-center'>Vista previa</p>
@@ -766,7 +775,17 @@ export default function TextEditor() {
                 <div className="w-full px-4 py-2 bg-white rounded-b-lg dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 shadow-xl dark:shadow-none">
                     <div ref={editorRef} id="wysiwyg-example" className="block w-full px-0 text-zinc-800 bg-white border-0 dark:bg-zinc-800 focus:ring-0 dark:text-white dark:placeholder-zinc-400 max-w-5xl"></div>
                 </div>
-                <Button onClick={saveContent} className="py-2 text-sm font-semibold text-white bg-blue-500 dark:bg-blue-600 rounded-b-lg mt-6 mx-auto">Guardar contenido</Button>
+                <Button
+                    form='form-card'
+                    type='submit'
+                    // onClick={saveContent}
+                    className="py-2 text-sm font-semibold text-white bg-blue-500 dark:bg-blue-600 rounded-b-lg mt-6 mx-auto"
+                >
+                    {isLoading &&
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    }
+                    Guardar contenido
+                </Button>
             </div>
         </div>
     )
