@@ -15,8 +15,6 @@ export async function GET(req: NextRequest) {
     try {
         await connectMongoDB();
 
-        const menu = await Blogs.find();
-
         // Obtener los parámetros de consulta
         const { searchParams } = new URL(req.url);
         const page = parseInt(searchParams.get("page") || "1", 10); // Página por defecto: 1
