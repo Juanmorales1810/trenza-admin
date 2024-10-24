@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
             },
             { status: 200 }
         );
-    } catch (error: any) {
+    } catch (error) {
         console.error("Error al obtener datos de Mascotas:", error);
         return NextResponse.json(
             { message: messages.error.default, error },
@@ -86,23 +86,25 @@ export async function POST(NextRequest: NextRequest) {
         const buffer = await Buffer.from(bytes);
         console.log("Imagen subida:", buffer);
 
-        const resultImag: any = await new Promise((resolve, reject) => {
-            cloudinary.uploader
-                .upload_stream({}, (error, result) => {
-                    if (error) {
-                        console.log("Error al subir la imagen:", error);
+        const resultImag: { secure_url: string } = await new Promise(
+            (resolve, reject) => {
+                cloudinary.uploader
+                    .upload_stream({}, (error, result) => {
+                        if (error) {
+                            console.log("Error al subir la imagen:", error);
 
-                        reject(error);
-                    } else {
-                        console.log("Imagen subida");
-                        resolve(result);
-                    }
-                })
-                .end(buffer);
-        });
+                            reject(error);
+                        } else {
+                            console.log("Imagen subida");
+                            resolve(result as { secure_url: string });
+                        }
+                    })
+                    .end(buffer);
+            }
+        );
         console.log("Imagen subida:", resultImag);
 
-        const imageUrl = resultImag.secure_url;
+        const imageUrl = resultImag?.secure_url;
 
         // Verificar si se proporcionó una imagen de cover válida
 
@@ -114,20 +116,22 @@ export async function POST(NextRequest: NextRequest) {
         const coverBuffer = await Buffer.from(coverBytes);
         console.log("Imagen subida:", buffer);
 
-        const coverResultImag: any = await new Promise((resolve, reject) => {
-            cloudinary.uploader
-                .upload_stream({}, (error, result) => {
-                    if (error) {
-                        console.log("Error al subir la imagen:", error);
+        const coverResultImag: { secure_url: string } = await new Promise(
+            (resolve, reject) => {
+                cloudinary.uploader
+                    .upload_stream({}, (error, result) => {
+                        if (error) {
+                            console.log("Error al subir la imagen:", error);
 
-                        reject(error);
-                    } else {
-                        console.log("Imagen subida");
-                        resolve(result);
-                    }
-                })
-                .end(coverBuffer);
-        });
+                            reject(error);
+                        } else {
+                            console.log("Imagen subida");
+                            resolve(result as { secure_url: string });
+                        }
+                    })
+                    .end(coverBuffer);
+            }
+        );
         console.log("Cover subida:", coverResultImag);
 
         const CoverUrl = resultImag.secure_url;
@@ -160,7 +164,7 @@ export async function POST(NextRequest: NextRequest) {
                 status: 200,
             }
         );
-    } catch (error: any) {
+    } catch (error) {
         console.error("Error al guardar el blog:", error);
         return NextResponse.json(
             { message: messages.error.default, error },
