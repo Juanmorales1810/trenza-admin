@@ -1,6 +1,6 @@
 import Blogs, { IBlogSchema } from "@/models/blogs";
 import { NextResponse, NextRequest } from "next/server";
-import { connectMongoDB } from "@/libs/mongodb";
+import { connectMongoDB } from "@/lib/mongodb";
 import { v2 as cloudinary } from "cloudinary";
 import { messages } from "@/utils/messages";
 
