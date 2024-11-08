@@ -351,8 +351,8 @@ export default function TextEditor() {
                 />
             </div>
 
-            <div className="flex flex-col justify-center items-center">
-                <div className="w-full px-3 py-2 border-b dark:border-zinc-700 rounded-t-lg bg-zinc-50 dark:bg-zinc-900">
+            <div className="relative flex flex-col justify-center items-center">
+                <div className="w-full px-3 py-2 border-b dark:border-zinc-700 rounded-t-lg bg-zinc-50 dark:bg-zinc-900 sticky z-50 top-0">
                     <div className="flex flex-wrap items-center">
                         <div className="flex items-center space-x-1 rtl:space-x-reverse flex-wrap">
                             <ToggleGroup type="multiple">
