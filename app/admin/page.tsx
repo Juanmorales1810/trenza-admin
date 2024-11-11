@@ -7,7 +7,7 @@ export default function page() {
             <p className="text-gray-500 mb-2">Aca podrás gestionar tus paginas</p>
             <p className="text-gray-500">Haz click en selecciona la empresa para poder continuar o click en las siguientes opciones</p>
             <div className="flex gap-4 py-8">
-                <Link href="/admin/page/create">
+                <Link href="/admin/trenza-matrimonios">
                     <article className="bg-cyan-600 w-72 h-20 ring-1 ring-zinc-200 rounded-xl px-4 py-2 hover:bg-cyan-800 transition-colors">
                         <main>
                             <p className="font-semibold text-xl">
