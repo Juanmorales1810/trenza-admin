@@ -15,7 +15,7 @@ export default function BlogLayout({
                         <div>
                             <SidebarTrigger />
                         </div>
-                        <div className="px-4">
+                        <div className="px-4 mx-auto">
                             {children}
                         </div>
                     </div>
