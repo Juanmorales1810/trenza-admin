@@ -12,13 +12,17 @@ import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import Link from "next/link";
 import * as z from 'zod'
+import { useFetch } from "@/hooks/useFetch";
+import { useLoading } from "@/hooks/useLoading";
 
 
 
 type LoginFormValues = z.infer<typeof loginSchema>
 
 export default function LoginForm() {
+    const { finishLoading, isLoading, startLoading } = useLoading()
     const [showPassword, setShowPassword] = useState(false)
+    const Fetch = useFetch()
 
     const form = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
@@ -28,9 +32,16 @@ export default function LoginForm() {
         },
     })
 
-    function onSubmit(data: LoginFormValues) {
+    async function onSubmit(data: LoginFormValues) {
         console.log(data)
-        // Aquí iría la lógica para enviar los datos al servidor
+        startLoading()
+        await Fetch({
+            endpoint: 'auth/login',
+            redirectRoute: '/admin',
+            formData: data,
+            method: 'POST'
+        })
+        finishLoading()
     }
 
     const togglePasswordVisibility = () => {
