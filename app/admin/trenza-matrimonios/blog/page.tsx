@@ -1,9 +1,8 @@
-import TextEditor from "@/components/textEditor";
 
 export default function page() {
     return (
         <div>
-            <TextEditor />
+            <p>Aquí estarán todos los blogs</p>
         </div>
     )
 }
