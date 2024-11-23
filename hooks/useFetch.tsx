@@ -2,7 +2,6 @@ import axios, { AxiosRequestConfig, Method } from 'axios'
 import { useRouter } from 'next/navigation'
 import useStore from '@/context/store'
 import { toast } from 'sonner'
-import Image from 'next/image'
 
 
 interface AuthFetchProps {
@@ -33,23 +32,7 @@ export function useFetch() {
             })
             console.log(data.message);
             if (data.message) {
-                toast(
-                    <div className='flex justify-around items-center gap-4 w-full'>
-                        <Image src='/icon-192x192.png' width={40} height={40} alt='PichiriKa' />
-                        <h1 className='font-semibold'>{data.message}</h1>
-                    </div>
-                    , {
-                        unstyled: true,
-                        style: {
-                            backgroundColor: '#d9f99d',
-                            color: '#365314',
-                            paddingLeft: '10px',
-                            paddingRight: '10px',
-                            paddingTop: '4px',
-                            paddingBottom: '4px',
-                            borderRadius: '16px',
-                        },
-                    });
+                toast(data.message);
             }
             if (data.userLogged) {
                 setUser(data.userLogged)
