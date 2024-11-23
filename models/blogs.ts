@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, ObjectId } from "mongoose";
+import { Schema, Document, ObjectId } from "mongoose";
 
 export interface IBlog {
     _id?: ObjectId | string | undefined;
@@ -33,4 +33,4 @@ const BlogSchema: Schema = new Schema(
     }
 );
 
-export default mongoose.models.Blogs || mongoose.model("Blogs", BlogSchema);
+export default BlogSchema;
