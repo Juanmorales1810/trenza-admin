@@ -1,4 +1,5 @@
-import Blogs, { IBlogSchema } from "@/models/blogs";
+import { IBlogSchema } from "@/models/blogs";
+import { TrenzaMatrimoniosBlogsModel } from "@/models/trenza";
 import { NextResponse, NextRequest } from "next/server";
 import { connectMongoDB } from "@/lib/mongodb";
 import { v2 as cloudinary } from "cloudinary";
@@ -28,13 +29,15 @@ export async function GET(req: NextRequest) {
         const filter = search ? { titulo: new RegExp(search, "i") } : {}; // Filtra por nombre, ignorando mayúsculas/minúsculas
 
         // Obtener elementos con filtrado y paginación (el método sort ordena los elementos por fecha de creación descendente)
-        const items = await Blogs.find(filter)
+        const items = await TrenzaMatrimoniosBlogsModel.find(filter)
             .sort({ _id: -1 })
             .skip(skip)
             .limit(limit);
 
         // Obtener el total de documentos que coinciden con el filtro
-        const totalItems = await Blogs.countDocuments(filter);
+        const totalItems = await TrenzaMatrimoniosBlogsModel.countDocuments(
+            filter
+        );
 
         return NextResponse.json(
             {
@@ -146,18 +149,18 @@ export async function POST(NextRequest: NextRequest) {
         const obj = JSON.parse(body);
         console.log(obj);
 
-        const newPet: IBlogSchema = new Blogs({
+        const newBlog: IBlogSchema = new TrenzaMatrimoniosBlogsModel({
             title: obj.title,
             description: obj.description,
             image: obj.image,
             imageCover: obj.imageCover,
             content: obj.content,
         });
-        const savedPet = await newPet.save();
-        console.log("Blog guardado:", savedPet);
+        const savedBlog = await newBlog.save();
+        console.log("Blog guardado:", savedBlog);
         return NextResponse.json(
             {
-                newMenu: savedPet,
+                newMenu: savedBlog,
                 message: messages.success.blogCreated,
             },
             {
