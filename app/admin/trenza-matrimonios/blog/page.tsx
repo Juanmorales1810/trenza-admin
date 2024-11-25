@@ -15,7 +15,7 @@ const getItems = cache(async function loadMenu() {
 export default async function page() {
     const blogs = await getItems();
     return (
-        <div>
+        <div className="grid grid-cols-2 w-full max-w-7xl gap-16 mx-auto ">
             {blogs.map((blog) => (
                 <CardBlog
                     key={blog._id}
