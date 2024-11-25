@@ -43,4 +43,13 @@ export const blogValidationschema = z.object({
         .nonempty(),
     Image: imageSchema,
     Cover: imageSchema,
+    Slug: z
+        .string()
+        .min(5, { message: "El slug debe tener al menos 5 caracteres" })
+        .max(50, { message: "El slug debe tener menos de 50 caracteres" })
+        .regex(/^[a-z0-9-]+$/, {
+            message:
+                "El slug solo puede contener letras, números y guiones, sin espacios.",
+        })
+        .nonempty(),
 });
