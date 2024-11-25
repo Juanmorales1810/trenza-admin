@@ -7,6 +7,7 @@ export interface IBlog {
     image: string;
     imageCover: string;
     content: object;
+    slug: string;
 }
 
 //@ts-ignore
@@ -17,6 +18,7 @@ export interface IBlogSchema extends Document {
     image: string;
     imageCover: string;
     content: object;
+    slug: string;
 }
 
 const BlogSchema: Schema = new Schema(
@@ -26,6 +28,7 @@ const BlogSchema: Schema = new Schema(
         image: { type: String, required: true },
         imageCover: { type: String, required: true },
         content: { type: Object, required: true },
+        slug: { type: String, required: true },
     },
     {
         versionKey: false,
