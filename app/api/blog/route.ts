@@ -65,6 +65,7 @@ export async function POST(NextRequest: NextRequest) {
     const image = data.get("image");
     const imageCover = data.get("cover");
     const content = data.get("content");
+    const slug = data.get("slug");
 
     connectMongoDB();
     try {
@@ -135,9 +136,8 @@ export async function POST(NextRequest: NextRequest) {
                     .end(coverBuffer);
             }
         );
+        const CoverUrl = coverResultImag.secure_url;
         console.log("Cover subida:", coverResultImag);
-
-        const CoverUrl = resultImag.secure_url;
 
         const body = JSON.stringify({
             title,
@@ -145,6 +145,7 @@ export async function POST(NextRequest: NextRequest) {
             image: imageUrl,
             imageCover: CoverUrl,
             content,
+            slug,
         });
         const obj = JSON.parse(body);
         console.log(obj);
@@ -155,6 +156,7 @@ export async function POST(NextRequest: NextRequest) {
             image: obj.image,
             imageCover: obj.imageCover,
             content: obj.content,
+            slug: obj.slug,
         });
         const savedBlog = await newBlog.save();
         console.log("Blog guardado:", savedBlog);
