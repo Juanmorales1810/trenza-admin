@@ -212,13 +212,14 @@ export default function TextEditor() {
 
 
     //Enviar datos
-    const onSubmit = handleSubmit(async ({ Titulo: titulo, Description: description }) => {
+    const onSubmit = handleSubmit(async ({ Titulo: titulo, Description: description, Slug: slug }) => {
         console.log("hola");
 
         startLoading()
         const formData = new FormData();
         formData.append("titulo", titulo);
         formData.append("description", description);
+        formData.append("slug", watch(slug));
 
         const imageFile = watch('Image') as FileList;
         if (imageFile && imageFile[0]) {
