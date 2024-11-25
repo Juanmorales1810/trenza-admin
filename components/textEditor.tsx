@@ -240,7 +240,7 @@ export default function TextEditor() {
 
         await authFetch({
             endpoint: 'blog',
-            // redirectRoute: '/admin/settings',
+            redirectRoute: '/admin/trenza-matrimonios/blog',
             formData: formData,
             options: {
                 headers: {
@@ -275,6 +275,15 @@ export default function TextEditor() {
                         {...register('Description')}
                     />
                     {errors.Description?.message && <p className='text-red-500 text-xs relative -top-3 left-3'>{String(errors.Description.message)}</p>}
+                    <Label>Slug</Label>
+                    <Input
+                        type='text'
+                        placeholder="slug-de-la-publicacion"
+                        className="w-full mb-4 invalid:border-red-500"
+                        aria-invalid={errors.Slug ? "true" : "false"}
+                        {...register('Slug')}
+                    />
+                    {errors.Slug?.message && <p className='text-red-500 text-xs relative -top-3 left-3'>{String(errors.Slug.message)}</p>}
                     <Label>Imagen de la card (formato 1:1)</Label>
                     <Input
                         type="file"
