@@ -1,8 +1,31 @@
+import { TrenzaMatrimoniosBlogsModel } from "@/models/trenza";
+import { connectMongoDB } from "@/lib/mongodb";
+import CardBlog from "@/components/cardBlog";
+import { cache } from "react";
 
-export default function page() {
+const getItems = cache(async function loadMenu() {
+    await connectMongoDB();
+    const ListBlogs = await TrenzaMatrimoniosBlogsModel.find();
+    return ListBlogs.map(blogs => {
+        const obj = blogs.toObject();
+        obj._id = obj._id.toString(); // Convierte _id a una cadena
+        return obj;
+    }); // Usa .toObject() para convertir cada producto a un objeto JavaScript simple
+})
+export default async function page() {
+    const blogs = await getItems();
     return (
         <div>
-            <p>Aquí estarán todos los blogs</p>
+            {blogs.map((blog) => (
+                <CardBlog
+                    key={blog._id}
+                    title={blog.title}
+                    description={blog.description}
+                    image={blog.image}
+                    date={blog.createdAt}
+                    slug="#"
+                />
+            ))}
         </div>
     )
 }
