@@ -3,6 +3,8 @@ import { connectMongoDB } from "@/lib/mongodb";
 import CardBlog from "@/components/cardBlog";
 import { cache } from "react";
 
+export const dynamic = "force-dynamic";
+
 const getItems = cache(async function loadMenu() {
     await connectMongoDB();
     const ListBlogs = await TrenzaMatrimoniosBlogsModel.find();
