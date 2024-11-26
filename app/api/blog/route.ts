@@ -86,9 +86,9 @@ export async function POST(NextRequest: NextRequest) {
             throw new Error("No se proporcionó ninguna imagen válida");
         }
 
-        const bytes = await (image as Blob).arrayBuffer();
-        const buffer = await Buffer.from(bytes);
-        console.log("Imagen subida:", buffer);
+        const imageBytes = await (image as Blob).arrayBuffer();
+        const imageBuffer = Buffer.from(imageBytes);
+        console.log("Subiendo imagen...");
 
         const resultImag: { secure_url: string } = await new Promise(
             (resolve, reject) => {
@@ -103,7 +103,7 @@ export async function POST(NextRequest: NextRequest) {
                             resolve(result as { secure_url: string });
                         }
                     })
-                    .end(buffer);
+                    .end(imageBuffer);
             }
         );
         console.log("Imagen subida:", resultImag);
@@ -116,9 +116,9 @@ export async function POST(NextRequest: NextRequest) {
             throw new Error("No se proporcionó ninguna imagen de cover válida");
         }
 
-        const coverBytes = await (image as Blob).arrayBuffer();
-        const coverBuffer = await Buffer.from(coverBytes);
-        console.log("Imagen subida:", buffer);
+        const coverBytes = await (imageCover as Blob).arrayBuffer();
+        const coverBuffer = Buffer.from(coverBytes);
+        console.log("Subiendo imagen de cover...");
 
         const coverResultImag: { secure_url: string } = await new Promise(
             (resolve, reject) => {
