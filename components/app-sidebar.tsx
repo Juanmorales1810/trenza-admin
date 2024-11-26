@@ -31,8 +31,8 @@ const sections = [
         name: 'Portafolio',
         icon: Briefcase,
         items: [
-            { name: 'Nuevo', icon: Plus, urlMatrimonio: '/admin/trenza-matrimonios/portafolio/nuevo', urlEstudio: '/admin/trenza-estudio/portafolio/nuevo' },
-            { name: 'Portafolio', icon: Camera, urlMatrimonio: '/admin/trenza-matrimonios/portafolio', urlEstudio: '/admin/trenza-estudio/portafolio' }
+            { name: 'Nuevo', icon: Plus, urlMatrimonio: '/admin/trenza-matrimonios/portfolio/nuevo', urlEstudio: '/admin/trenza-estudio/portafolio/nuevo' },
+            { name: 'Portafolio', icon: Camera, urlMatrimonio: '/admin/trenza-matrimonios/portfolio', urlEstudio: '/admin/trenza-estudio/portafolio' }
         ]
     },
 ]
