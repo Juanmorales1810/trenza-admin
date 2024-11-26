@@ -219,7 +219,7 @@ export default function TextEditor() {
         const formData = new FormData();
         formData.append("titulo", titulo);
         formData.append("description", description);
-        formData.append("slug", watch(slug));
+        formData.append("slug", slug);
 
         const imageFile = watch('Image') as FileList;
         if (imageFile && imageFile[0]) {
