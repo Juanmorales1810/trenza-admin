@@ -255,7 +255,7 @@ export default function TextEditor() {
 
 
     return (
-        <div className='w-full max-w-5xl'>
+        <div className='w-full max-w-5xl mx-auto'>
             <div className='flex flex-row justify-center items-start gap-10 my-16'>
                 <form id='form-card' onSubmit={onSubmit} className='flex-1' action="/submit" >
                     <p className='text-xl my-2 text-center'>Datos de la card</p>
@@ -788,13 +788,13 @@ export default function TextEditor() {
                 <Button
                     form='form-card'
                     type='submit'
-                    // onClick={saveContent}
+                    disabled={isLoading}
                     className="py-2 text-sm font-semibold text-white bg-blue-500 dark:bg-blue-600 rounded-b-lg mt-6 mx-auto"
                 >
                     {isLoading &&
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     }
-                    Guardar contenido
+                    {isLoading ? 'Guardando...' : 'Guardar'}
                 </Button>
             </div>
         </div>
