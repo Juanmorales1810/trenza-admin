@@ -243,11 +243,7 @@ export default function TextEditor() {
             endpoint: 'blog',
             redirectRoute: '/admin/trenza-matrimonios/blog',
             formData: formData,
-            options: {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }
+            method: 'POST',
         })
         finishLoading()
 
