@@ -12,51 +12,13 @@ cloudinary.config({
     secure: true,
 });
 
-export async function GET(req: NextRequest) {
-    try {
-        await connectMongoDB();
-
-        // Obtener los parámetros de consulta
-        const { searchParams } = new URL(req.url);
-        const page = parseInt(searchParams.get("page") || "1", 10); // Página por defecto: 1
-        const limit = parseInt(searchParams.get("limit") || "10", 10); // Límite por defecto: 10 elementos por página
-        const search = searchParams.get("search") || ""; // Filtro de búsqueda
-
-        // Calcular el índice de inicio
-        const skip = (page - 1) * limit;
-
-        // Construir el filtro de búsqueda
-        const filter = search ? { titulo: new RegExp(search, "i") } : {}; // Filtra por nombre, ignorando mayúsculas/minúsculas
-
-        // Obtener elementos con filtrado y paginación (el método sort ordena los elementos por fecha de creación descendente)
-        const items = await TrenzaMatrimoniosBlogsModel.find(filter)
-            .sort({ _id: -1 })
-            .skip(skip)
-            .limit(limit);
-
-        // Obtener el total de documentos que coinciden con el filtro
-        const totalItems = await TrenzaMatrimoniosBlogsModel.countDocuments(
-            filter
-        );
-
-        return NextResponse.json(
-            {
-                items,
-                totalItems,
-                currentPage: page,
-                totalPages: Math.ceil(totalItems / limit),
-                message: messages.success.getItme,
-            },
-            { status: 200 }
-        );
-    } catch (error) {
-        console.error("Error al obtener datos de Mascotas:", error);
-        return NextResponse.json(
-            { message: messages.error.default, error },
-            { status: 500 }
-        );
-    }
-}
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: "10mb", // Aumenta el límite de tamaño de carga a 10MB
+        },
+    },
+};
 
 export async function POST(NextRequest: NextRequest) {
     const data = await NextRequest.formData();
