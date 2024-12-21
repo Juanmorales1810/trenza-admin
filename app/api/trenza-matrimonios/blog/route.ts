@@ -12,14 +12,6 @@ cloudinary.config({
     secure: true,
 });
 
-export const config = {
-    api: {
-        bodyParser: {
-            sizeLimit: "10mb", // Aumenta el límite de tamaño de carga a 10MB
-        },
-    },
-};
-
 export async function POST(NextRequest: NextRequest) {
     const data = await NextRequest.formData();
     const title = data.get("titulo");
