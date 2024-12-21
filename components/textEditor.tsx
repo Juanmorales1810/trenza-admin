@@ -240,10 +240,15 @@ export default function TextEditor() {
 
 
         await authFetch({
-            endpoint: 'blog',
+            endpoint: 'trenza-matrimonios/blog',
             redirectRoute: '/admin/trenza-matrimonios/blog',
             formData: formData,
             method: 'POST',
+            options: {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            },
         })
         finishLoading()
 
